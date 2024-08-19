@@ -11,7 +11,7 @@ license="MIT"
 depends="" # Shared object dependencies are automatically detected by the package manager.
 
 builddir="$srcdir/"
-makedepends="cmake g++ gcc git numactl-dev linux-headers lttng-ust-dev make musl-dev openssl-dev"
+makedepends="cmake g++ gcc git numactl-dev linux-headers lttng-ust-dev make musl-dev openssl-dev perl xz"
 checkdepends="perf"
 
 _giturl="$REPO"
@@ -20,43 +20,41 @@ _gittag="$SHA"
 # Should not be used for PR packaging
 # _disturl="dev.alpinelinux.org:/archive/$pkgname/"
 
-_disturl="/home/packaging/github-actions/packages"
 tar_name="$pkgname-$pkgver.tar.xz"
-source="$_disturl/$pkgname-$pkgver.tar.xz"
+source="$pkgname-$pkgver.tar.xz"
 
 snapshot() {
     clean
     deps
-    mkdir -p "$srcdir"
-    cd "${SRCDEST:-$srcdir}"
+    mkdir -p "$srcdir" && cd $srcdir
     git clone --recursive $_giturl $pkgname || return 1
     cd $pkgname
     git reset --hard $_gittag # Get specific commit
-    tar cv $pkgname | xz -T0 -9 -vv - > $SRCDEST/$tar_name
-    cp $SRCDEST/$tar_name $_disturl
+    rm -rf .git
+    tar cv . | xz -T0 -9 -vv - > $SRCDEST/$tar_name
+    cp $SRCDEST/$tar_name $srcdir/../
 }
 
 build() {
-        cd $builddir
-        cmake -B build/linux/Release \
-                -DCMAKE_BUILD_TYPE=Release \
-                -DCMAKE_TARGET_ARCHITECTURE=${TARGETARCH} \
-                -DQUIC_TLS=openssl3 \
-                -DQUIC_ENABLE_LOGGING=true \
-                -DQUIC_USE_SYSTEM_LIBCRYPTO=true \
-                -DQUIC_BUILD_TOOLS=off \
-                -DQUIC_BUILD_TEST=on \
-                -DQUIC_BUILD_PERF=off
-        cmake --build build/linux/Release  --config Release
+    cd $builddir
+    cmake -B build/linux/Release \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_TARGET_ARCHITECTURE=${TARGETARCH} \
+            -DQUIC_TLS=openssl3 \
+            -DQUIC_ENABLE_LOGGING=true \
+            -DQUIC_USE_SYSTEM_LIBCRYPTO=true \
+            -DQUIC_BUILD_TOOLS=off \
+            -DQUIC_BUILD_TEST=on \
+            -DQUIC_BUILD_PERF=off
+    cmake --build build/linux/Release  --config Release
 }
 
 check() {
-        # TODO : Run tests with packaging
-        cd $builddir/build/linux/Release
-        ctest --output-on-failure || return 1
+    cd $builddir/build/linux/Release
+    bin/Release/msquictest --gtest_filter=ParameterValidation.ValidateApi || return 1
 }
 
 package() {
-        mkdir -p "$pkgdir"
-        cmake --install build/linux/Release --prefix $pkgdir
+    mkdir -p "$pkgdir/usr"
+    cmake --install build/linux/Release --prefix $pkgdir/usr
 }
