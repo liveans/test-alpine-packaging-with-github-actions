@@ -45,6 +45,8 @@ jobs:
         wget $REPO_URL/packaging/github-actions/APKBUILD
         wget $REPO_URL/scripts/alpine-configure-packaging-key.sh
         wget $REPO_URL/scripts/alpine-packaging-prepare-script.sh
+        chmod +x alpine-configure-packaging-key.sh
+        chmod +x alpine-packaging-prepare-script.sh
       env:
         REPO_URL: https://raw.githubusercontent.com/${{ github.repository }}/${{ github.sha }}
 
