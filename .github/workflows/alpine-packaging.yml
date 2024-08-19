@@ -36,6 +36,8 @@ jobs:
       image: ${{ matrix.vec.image }}
       env:
         REPO_TAR_URL: ${{ github.api_url }}/repos/${{ github.repository }}/tarball/${{ github.sha }}
+        REPO: https://github.com/${{ github.repository }}
+        SHA: ${{ github.sha }}
         TARGETARCH: ${{ matrix.vec.arch }}
     steps:
     - name: Get Files

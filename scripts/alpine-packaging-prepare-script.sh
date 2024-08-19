@@ -15,4 +15,5 @@ echo "packaging ALL=(ALL)       NOPASSWD: ALL" > /etc/sudoers.d/packaging
 mkdir -p /var/cache/distfiles
 chmod a+w /var/cache/distfiles
 
-mkdir -p /home/packaging/.alpine
+mkdir -p /home/packaging/github-actions/packages/
+chown -R packaging:abuild /home/packaging/github-actions/packages/
