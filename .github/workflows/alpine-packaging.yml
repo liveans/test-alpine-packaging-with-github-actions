@@ -94,7 +94,5 @@ jobs:
         pushd src/cs/QuicSimpleTest && dotnet build QuicHello.net${{ matrix.vec.dotnetVersion }}.csproj -a ${{ matrix.vec.arch }} -c ${{ matrix.vec.config }} -o artifacts/net${{ matrix.vec.dotnetVersion }} -f net${{ matrix.vec.dotnetVersion }} && popd
     - name: Docker Run
       run: |
-        pwd
-        ls -la
         docker run -v $(pwd):/main ${{ matrix.vec.image }} /main/scripts/docker-script.sh ${{ matrix.vec.arch }} ${{ matrix.vec.config }} ${{ matrix.vec.tls }} ${{ matrix.vec.dotnetVersion }}
   
