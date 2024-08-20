@@ -6,7 +6,7 @@ pkgver=2.5.0
 pkgrel=0
 pkgdesc="Cross-platform, C implementation of the IETF QUIC protocol, exposed to C, C++, C# and Rust."
 url="https://github.com/microsoft/msquic"
-arch="x86_64 armhf aarch64"
+arch="x86_64 armv7 aarch64"
 license="MIT"
 depends="" # Shared object dependencies are automatically detected by the package manager.
 
