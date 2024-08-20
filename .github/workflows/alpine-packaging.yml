@@ -39,6 +39,7 @@ jobs:
         REPO: https://github.com/microsoft/msquic
         SHA: ebc124882651f2096a11df0135e5b2de318d5252
         TARGETARCH: ${{ matrix.vec.arch }}
+        REPO_URL: https://raw.githubusercontent.com/${{ github.repository }}/${{ github.sha }}
     steps:
     - name: Get Files
       run: |
