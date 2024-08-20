@@ -42,7 +42,9 @@ jobs:
     - name: Get Files
       run: |
         wget $REPO_URL/scripts/package-build.sh
-        chmod +x package-build.sh
+        mkdir tools
+        cp package-build.sh tools/package-build.sh
+        chmod +x tools/package-build.sh
     - name: Set up QEMU
       uses: docker/setup-qemu-action@49b3bc8e6bdd4a60e6116a5414239cba5943d3cf
     - name: Docker Run and Build Package
@@ -54,7 +56,9 @@ jobs:
                 -e REPO=$REPO \
                 -e SHA=$SHA \
                 -e TARGETARCH=$TARGETARCH \
-                -v artifacts:/artifacts ${{ matrix.vec.image }} package-build.sh
+                -v artifacts:/artifacts \ 
+                -v tools:/tools \ 
+                ${{ matrix.vec.image }} /tools/package-build.sh
     - name: Upload Package
       uses: actions/upload-artifact@834a144ee995460fba8ed112a2fc961b36a5ec5a
       with:
