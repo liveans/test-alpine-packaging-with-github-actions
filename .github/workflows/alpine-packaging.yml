@@ -32,9 +32,7 @@ jobs:
           { friendlyName: "Alpine-3.20-ARM32", config: "Release", arch: "arm", tls: "openssl3", image: "mcr.microsoft.com/dotnet/sdk:8.0-alpine3.20-arm32v7" },
         ]
     runs-on: ubuntu-latest
-    container:
-      image: ${{ matrix.vec.image }}
-      env:
+    env:
         REPO_TAR_URL: ${{ github.api_url }}/repos/microsoft/msquic/tarball/ebc124882651f2096a11df0135e5b2de318d5252
         REPO: https://github.com/microsoft/msquic
         SHA: ebc124882651f2096a11df0135e5b2de318d5252
