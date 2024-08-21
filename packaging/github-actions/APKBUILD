@@ -31,7 +31,7 @@ snapshot() {
     cd $pkgname
     git reset --hard $_gittag # Get specific commit
     rm -rf .git
-    tar cv . | xz -T0 -9 -vv - > $SRCDEST/$tar_name
+    tar c . | xz -T0 -9 -vv - > $SRCDEST/$tar_name
     cp $SRCDEST/$tar_name $srcdir/../
 }
 
