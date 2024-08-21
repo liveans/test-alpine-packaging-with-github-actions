@@ -39,7 +39,6 @@ build() {
     cd $builddir
     cmake -B build/linux/Release \
             -DCMAKE_BUILD_TYPE=Release \
-            -DCMAKE_TARGET_ARCHITECTURE=${TARGETARCH} \
             -DQUIC_TLS=openssl3 \
             -DQUIC_ENABLE_LOGGING=true \
             -DQUIC_USE_SYSTEM_LIBCRYPTO=true \
