@@ -18,7 +18,7 @@ source="msquic-$pkgver.tar.gz::https://github.com/microsoft/msquic/archive/6dfd8
         gtest-$_gtest.tar.gz::https://github.com/google/googletest/archive/$_gtest.tar.gz
         openssl3-$_openssl3.tar.gz::https://github.com/quictls/openssl/archive/$_openssl3.tar.gz
         "
-builddir="$srcdir/msquic-$pkgver"
+builddir="$srcdir/msquic-6dfd86ad0cf951c9d3bdc3b69a3c45bde6385018"
 
 prepare() {
         default_prepare
