@@ -6,10 +6,12 @@ on:
     branches:
     - main
     - release/*
+    - master
   pull_request:
     branches:
     - main
     - release/*
+    - master
 
 concurrency:
   # Cancel any workflow currently in progress for the same PR.
